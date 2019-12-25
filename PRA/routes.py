@@ -9,11 +9,5 @@ def index():
 def layout():
     return render_template('layout.html')
 
-@app.route('/registration')
-def registration():
-    return render_template('reg.html')
 
-@app.route('/login')
-def login():
-    return render_template('login.html')    
 
