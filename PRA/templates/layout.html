@@ -9,9 +9,10 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
+  <!-- login -->
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='login_css.css') }}">
 
   <!-- Favicons -->
-  <link href="{{url_for('static',filename='img/favicon.png') }}" rel="icon">
   <link href="{{ url_for('static',filename='img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -65,13 +66,34 @@
           <li class="active"><a href="index#intro">Home</a></li>
           <li><a href="index#about">About Us</a></li>
           <li><a href="index#services">Services</a></li>
-          <li><a href="">Login</a></li>
           <li><a href="index#footer">Contact Us</a></li>
+          <li><a href="" data-toggle="modal" data-target="#login-modal" >Login</a></li>
         </ul>
       </nav><!-- .main-nav -->
       
     </div>
-  </header>
+  </header>    
+    <div class="modal" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">         
+                     <div class="loginmodal-container"> 
+                        <h1>Login to Your Account</h1><br>
+                      <form>
+                        <input type="text" name="user" placeholder="Email">
+                        <input type="password" name="pass" placeholder="Password">
+                        <input type="submit" name="login" class=" btn btn-primary" value="Login" >
+                      </form>
+                        
+                      <div class="login-help">
+                        <a href="#">Register</a> - <a href="#">Forgot Password</a>
+                      </div>
+                    
+                  </div>    
+                </div>
+              </div>
+             </div> 
+    
   {%endblock header %}
   
   {% block body %}
@@ -199,7 +221,7 @@
 <script src="{{ url_for('static',filename='lib/isotope/isotope.pkgd.min.js') }}"></script>
 <script src="{{ url_for('static',filename='lib/lightbox/js/lightbox.min.js') }}"></script>
   <!-- Contact Form JavaScript File -->
-  <script src="{{ url_for('static',filename='contactform/contactform.js') }}"></script>
+  <!-- <script src="{{ url_for('static',filename='contactform/contactform.js') }}"></script> -->
 
   <!-- Template Main Javascript File -->
   <script src="{{ url_for('static',filename='js/main.js') }}"></script>
