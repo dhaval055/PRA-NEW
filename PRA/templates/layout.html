@@ -68,16 +68,20 @@
           <li><a href="index#services">Services</a></li>
           <li><a href="index#footer">Contact Us</a></li>
           <li><a href="" data-toggle="modal" data-target="#login-modal" >Login</a></li>
+          <li><a href="reg.html" data-toggle="modal" data-target="#login-modal" >Sign up</a></li>
         </ul>
       </nav><!-- .main-nav -->
       
     </div>
-  </header>    
+  </header>  
+   <!-- login modal code   -->
     <div class="modal" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
             
         <div class="modal-dialog modal-sm">
+            
           <div class="modal-content">         
-                     <div class="loginmodal-container"> 
+                     <div class="loginmodal-container">
+                      <button type="button" class="close" data-dismiss="modal">X</button> 
                         <h1>Login to Your Account</h1><br>
                       <form>
                         <input type="text" name="user" placeholder="Email">
@@ -93,6 +97,7 @@
                 </div>
               </div>
              </div> 
+             <!-- end login -->
     
   {%endblock header %}
   

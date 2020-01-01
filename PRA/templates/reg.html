@@ -1,0 +1,162 @@
+{% extends "layout.html" %}
+{% block html %}
+    {% block head %}
+    {{super()}}
+		<title>Registration</title>
+		<!-- MATERIAL DESIGN ICONIC FONT -->
+		<link rel="stylesheet" href="{{ url_for('static',filename='reg/fonts/material-design-iconic-font/css/material-design-iconic-font.css') }}">
+
+		<!-- STYLE CSS -->
+        <link rel="stylesheet" href="{{ url_for('static',filename='reg/css/style.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	{% endblock head %}
+    {% block content %}
+      {% block header %}
+        {{super()}}
+      {% endblock header %} 
+      {% block body %} 
+      <main id="main">
+        <div id="about">
+          <div class="container">
+		        <div class="wrapper"style="border-style: solid;">
+                    <form action="" id="wizard">
+        		<!-- SECTION 1 -->
+                <h4></h4>
+                <section>
+                    <h3>User profile</h3>
+                	<div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                Full Name
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-account-o"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Email ID
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-email"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                	</div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                Password
+                            </label>
+                            <div class="form-holder password">
+                                <i class="zmdi zmdi-eye"></i>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Confirm Password
+                            </label>
+                            <div class="form-holder password">
+                                <i class="zmdi zmdi-eye"></i>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+				<!-- SECTION 2 -->
+                <h4></h4>
+                <section>
+                	<h3>Organization profile</h3>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                Organization Type
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-account-o"></i>
+                                <select name="" id="" class="form-control">
+                                    <option value="united states" class="option">United States</option>
+                                    <option value="united kingdom" class="option">United Kingdom</option>
+                                    <option value="viet nam" class="option">Viet Nam</option>
+                                </select>
+                                <i class="zmdi zmdi-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Organization / Company Name
+                            </label>
+                            <div class="form-holder">
+                                <i class="fa fa-globe"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                Keywords / Hashtags <small>  (Seperated by space )</small>
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-spellcheck"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Twitter Account
+                            </label>
+                            <div class="form-holder">
+                                <i class="fa fa-twitter"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="">
+                                Facebook Account
+                            </label>
+                            <div class="form-holder">
+                                <i class="fa fa-facebook"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <label for="">
+                                Organization Email ID
+                            </label>
+                            <div class="form-holder">
+                                <i class="zmdi zmdi-email"></i>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 3 -->
+            </form>
+        </div>
+    </div>
+    </div>
+</section>
+</main>
+        {% endblock body %}
+        {% block footer%}
+            
+        {% endblock footer %}
+        {% block scripts %}    
+        {{super()}}
+
+		<script src="{{url_for('static',filename='reg/js/jquery-3.3.1.min.js')}}"></script>
+		
+		<!-- JQUERY STEP -->
+		<script src="{{url_for('static',filename='reg/js/jquery.steps.js')}}"></script>
+
+		<script src="{{url_for('static',filename='reg/js/main.js') }}"></script>
+        {% endblock scripts %}
+{% endblock content %}
+{% endblock html %}
