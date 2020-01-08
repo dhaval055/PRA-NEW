@@ -55,6 +55,15 @@
             </li>
           </ul>
         </nav>
+      {% with messages = get_flashed_messages(with_categories=false) %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-primary">
+            {{ message }}
+          </div>
+        {% endfor %}
+       {% endif %}
+      {% endwith %}
         {% endblock navbar %}
         {% block sidebar %}
         <div class="main-sidebar sidebar-style-2">

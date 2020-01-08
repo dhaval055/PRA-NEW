@@ -31,52 +31,68 @@
                     <div class="card-body">
                         <div class="row">                               
                           <div class="form-group col-md-6 col-12">
-                            <label>Full Name</label>
-                            <input type="text" class="form-control" value="" required="">
+                            <label for="fullname">Full Name</label>
+                            {{ form.fullname(class="form-control")}}
                             <div class="invalid-feedback">
-                              Please fill in the ull name
-                            </div>
+                              {% for error in form.fullname.errors %}
+                                  <span class="text-danger">{{ error }}</span>
+                              {% endfor %}
+                          </div>
                           </div>
                           <div class="form-group col-md-6 col-12">
-                            <label>Organization Name</label>
-                            <input type="text" class="form-control" value="" required="">
+                            <label for="last_name">Organization Name</label>
+                            {{ form.organization(class="form-control")}}
                             <div class="invalid-feedback">
-                              Please fill in the organization name
+                              {% for error in form.organization.errors %}
+                                  <span class="text-danger">{{ error }}</span>
+                              {% endfor %}
                             </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="form-group col-md-12 col-12">
-                            <label>Email</label>
-                            <input type="email" class="form-control" value="" required="">
-                            <div class="invalid-feedback">
-                              Please fill in the email
-                            </div>
+                            <label for="email">Email</label>
+                             {{ form.email(class="form-control")}}
+                            {% for error in form.email.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
                           </div>
                           </div>
                           <div class="row">
                           <div class="form-group col-md-6 col-12">
-                             <label>password</label>
-                            <input type="password" class="form-control" value="">
+                            <label for="password">Password</label>
+                            {{ form.password(class="form-control pwstrength")}}
+                            {% for error in form.password.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
                           </div>
                         <div class="form-group col-md-6 col-12">
-                            <label>Twitter account link</label>
-                            <input type="text" class="form-control" value="">
+                          <label>Twitter account link</label>
+                          {{ form.twitter_link(class="form-control")}}
+                          {% for error in form.twitter_link.errors %}
+                              <span class="text-danger">{{ error }}</span>
+                          {% endfor %} 
                         </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6 col-12">
-                                <label>Facebook account link</label>
-                                <input type="text" class="form-control" value="">
+                              <label>Facebook account link</label>
+                              {{ form.facebook_link(class="form-control")}}
+                              {% for error in form.facebook_link.errors %}
+                                    <span class="text-danger">{{ error }}</span>
+                              {% endfor %}
                             </div>
                             <div class="form-group col-md-6 col-12">
-                                <label>Keywords <small>(Seperated by space)</small></label>
-                                <input type="text" class="form-control" value="">
+                              <label>Keywords <span>(Seperated by space)</span></label>
+                              {{ form.keywords(class="form-control")}}
+                              {% for error in form.keywords.errors %}
+                                   <span class="text-danger">{{ error }}</span>
+                              {% endfor %}
                             </div>
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                      <button class="btn btn-primary">Save Changes</button>
+                      {{ form.submit(class=" btn btn-primary btn-block btn-block")}}
                     </div>
                   </form>
                 </div>

@@ -2,7 +2,6 @@
 {% extends "dependancies.html" %}
 {% block head %}
   {{super()}}
-  <link rel="stylesheet" href="{{url_for('static',filename='assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css')}}">
   {% block title %}<title>Register</title> {% endblock title%}
 {% endblock head %}
 {% block content %}
@@ -20,37 +19,47 @@
               <div class="card-header"><h4>Register</h4></div>
 
               <div class="card-body">
-                <form method="">
+                <form method="POST" action="">
+                  {{ form.hidden_tag() }}
                   <div class="row">
                     <div class="form-group col-6">
-                      <label for="frist_name">Full Name</label>
-                      <input id="frist_name" type="text" class="form-control" name="frist_name" autofocus>
+                      <label for="fullname">Full Name</label>
+                        {{ form.fullname(class="form-control")}}
+                          {% for error in form.fullname.errors %}
+                              <span class="text-danger">{{ error }}</span>
+                          {% endfor %}
                     </div>
                     <div class="form-group col-6">
                       <label for="last_name">Organization Name</label>
-                      <input id="last_name" type="text" class="form-control" name="last_name">
+                      {{ form.organization(class="form-control")}}
+                        {% for error in form.organization.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}                   
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email">
-                    <div class="invalid-feedback">
-                    </div>
+                    {{ form.email(class="form-control")}}     
+                            {% for error in form.email.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}     
                   </div>
 
                   <div class="row">
                     <div class="form-group col-6">
                       <label for="password" class="d-block">Password</label>
-                      <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator" name="password">
-                      <div id="pwindicator" class="pwindicator">
-                        <div class="bar"></div>
-                        <div class="label"></div>
-                      </div>
+                      {{ form.password(class="form-control pwstrength")}}
+                      {% for error in form.password.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}    
                     </div>
                     <div class="form-group col-6">
-                      <label for="password2" class="d-block">Password Confirmation</label>
-                      <input id="password2" type="password" class="form-control" name="password-confirm">
+                      <label for="confirm_password" class="d-block">Password Confirmation</label>
+                      {{ form.confirm_password(class="form-control")}}
+                            {% for error in form.confirm_password.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}        
                     </div>
                   </div>
 
@@ -60,28 +69,33 @@
                   <div class="row">
                     <div class="form-group col-6">
                       <label>Organization Type</label>
-                      <select class="form-control selectric">
-                        <option>Airline</option>
-                        <option>Restaurant/ Hotels</option>
-                        <option>E-commerce</option>
-                        <option>Political Groups</option>
-                        <option>Education</option>
-                      </select>
+                      {{ form.organization_type(class="form-control selectric") }}
                     </div>
+                  
                     <div class="form-group col-6">
                       <label>Twitter account link</label>
-                      <input type="text" class="form-control">
+                      {{ form.twitter_link(class="form-control")}}
+                      {% for error in form.twitter_link.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %} 
+                      <!-- <input type="text" class="form-control"> -->
                     </div>
                   </div>
                  
                   <div class="row">
                     <div class="form-group col-6">
                       <label>Facebook account link</label>
-                      <input type="text" class="form-control">
+                      {{ form.facebook_link(class="form-control")}}
+                      {% for error in form.facebook_link.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
                     </div>
                     <div class="form-group col-6">
                        <label>Keywords <span>(Seperated by space)</span></label>
-                      <input type="text" class="form-control">
+                       {{ form.keywords(class="form-control")}}
+                       {% for error in form.keywords.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %} 
                     </div>
                   </div>
 
@@ -93,8 +107,9 @@
                   </div>
 
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">
-                      Register
+                    {{ form.submit(class="btn btn-primary btn-block btn-block")}}
+                    <!-- <button type="submit" class="btn btn-primary btn-lg btn-block"> -->
+                      
                     </button>
                   </div>
                 </form>

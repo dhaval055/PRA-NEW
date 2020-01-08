@@ -6,6 +6,7 @@
 {% endblock  head %}
 {% block content %}
 <body>
+  {{super()}}
   <div id="app">
     <section class="section">
       <div class="container mt-5">
@@ -22,25 +23,25 @@
                 <form method="POST" action="#" class="needs-validation" novalidate="">
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
-                    <div class="invalid-feedback">
-                      Please fill in your email
-                    </div>
+                    {{ form.email(class="form-control")}}     
+                      {% for error in form.email.errors %}
+                          <span class="text-danger">{{ error }}</span>
+                      {% endfor %}
                   </div>
 
                   <div class="form-group">
                     <div class="d-block">
                     	<label for="password" class="control-label">Password</label>
                       <div class="float-right">
-                        <a href="auth-forgot-password.html" class="text-small">
+                        <a href="" class="text-small">
                           Forgot Password?
                         </a>
                       </div>
                     </div>
-                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
-                    <div class="invalid-feedback">
-                      please fill in your password
-                    </div>
+                      {{ form.password(class="form-control pwstrength")}}
+                      {% for error in form.password.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                      {% endfor %}
                   </div>
 
                   <div class="form-group">
