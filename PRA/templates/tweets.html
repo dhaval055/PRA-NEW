@@ -1,0 +1,31 @@
+{% extends "layout-sidebar.html" %}
+{% block head %}
+  {{super()}}
+ {% block title %}
+  <title>Public Relations Analyzer</title>
+{% endblock title %}
+{% endblock head %}
+
+    {% block navbar %}
+        {{super()}}
+    {% endblock navbar %}  
+    {% block sidebar %}
+        {{super()}}
+    {% endblock sidebar %}  
+    {% block content %}
+    <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Twitter Data</h1>
+          </div>
+          <h2 class="section-title">what's up ,TestUser!</h2>
+            <p class="section-lead">
+              Full list of tweets, In case you want to take a look at all of them.
+            </p>
+            
+        </section> 
+    </div>      
+    {% endblock content %}
+    {% block scripts %}
+        {{super()}}
+    {% endblock scripts %} 

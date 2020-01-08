@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, abort
 from PRA import app
 
-@app.route('/')
+@app.route('/index')
 def index():
     return render_template('index.html')
 
@@ -19,7 +19,12 @@ def home():
 
 @app.route('/update')
 def update():
-    return render_template('update-profile.html')      
+    return render_template('update-profile.html')
 
-    
+@app.route('/feedback')
+def feedback():
+    return render_template('contact.html')
 
+@app.route('/tweets')
+def tweets():
+    return render_template('tweets.html')
