@@ -1,6 +1,7 @@
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify, json
+from flask_bcrypt import bcrypt
 from PRA.forms import RegistrationForm, UpdateForm, LoginForm
-from PRA import app
+from PRA import app, mongo, bcrypt
 
 @app.route('/index')
 def index():
@@ -10,6 +11,14 @@ def index():
 def registration():
     form = RegistrationForm()
     if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        keywords = form.keywords.data.split()
+        user_profile = {
+            "FullName": form.fullname.data, "Organiaztion" : form.organization.data,
+            "Email": form.email.data,"Password": hashed_password, "OrganizationType": form.organization_type.data,
+            "TwitterLink": form.twitter_link.data, "FacebookLink": form.facebook_link.data, 
+            "Keywords":keywords }
+        mongo.db.user.insert_one(user_profile)   
         flash('Registration Successful, Login to continue.','success')
         return redirect('login')
     return render_template('auth-register.html',form=form)

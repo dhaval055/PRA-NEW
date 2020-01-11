@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from PRA import mongo
 
 class RegistrationForm(FlaskForm):
     fullname = StringField('Full name',
@@ -12,8 +13,8 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
-    organization_type = SelectField('Organization Type',choices=[('1', 'Airline'), ('2', 'E-commerce'), 
-                                        ('3', 'Education'),('4', 'Plotical Party')])                                 
+    organization_type = SelectField('Organization Type',choices=[('Airline', 'Airline'), ('E-commerce', 'E-commerce'), 
+                                        ('Education', 'Education'),('Political Party', 'Plotical Party')])                                 
     twitter_link = StringField('Twitter Link',
                            validators=[DataRequired(), Length(min=2, max=50)])
     facebook_link = StringField('facebook_link',
@@ -22,6 +23,12 @@ class RegistrationForm(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=25)])                                                                               
     submit = SubmitField('Sign Up')
 
+    def validate_email(self, email):
+        taken_email = mongo.db.user.find_one({"Email": email.data},{"_id":0 ,"Email":1})
+        if taken_email == None:
+            return
+        if taken_email['Email'] == email.data:
+                raise ValidationError('That email is taken. Please choose a different one.')
 
 class UpdateForm(FlaskForm):
     fullname = StringField('Full name',
