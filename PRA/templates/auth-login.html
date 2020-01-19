@@ -20,7 +20,7 @@
               <div class="card-header"><h4>Login</h4></div>
 
               <div class="card-body">
-                <form method="POST" action="#" class="needs-validation" novalidate="">
+                <form method="POST" action="">
                   <div class="form-group">
                     <label for="email">Email</label>
                     {{ form.email(class="form-control")}}     
@@ -38,7 +38,7 @@
                         </a>
                       </div>
                     </div>
-                      {{ form.password(class="form-control pwstrength")}}
+                      {{ form.password(class="form-control")}}
                       {% for error in form.password.errors %}
                                 <span class="text-danger">{{ error }}</span>
                       {% endfor %}
@@ -52,9 +52,7 @@
                   </div>
 
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                      Login
-                    </button>
+                    {{ form.submit(class="btn btn-primary btn-lg btn-block")}}
                   </div>
                 </form>
               </div>

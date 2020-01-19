@@ -1,8 +1,8 @@
-from flask import render_template, url_for, flash, redirect, request, abort, jsonify, json
-from flask_bcrypt import bcrypt
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify, json, session, g
 from PRA.forms import RegistrationForm, UpdateForm, LoginForm
 from PRA import app, mongo, bcrypt
 
+@app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
@@ -14,7 +14,7 @@ def registration():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         keywords = form.keywords.data.split()
         user_profile = {
-            "FullName": form.fullname.data, "Organiaztion" : form.organization.data,
+            "FullName": form.fullname.data, "Organization" : form.organization.data,
             "Email": form.email.data,"Password": hashed_password, "OrganizationType": form.organization_type.data,
             "TwitterLink": form.twitter_link.data, "FacebookLink": form.facebook_link.data, 
             "Keywords":keywords }
@@ -26,21 +26,72 @@ def registration():
 @app.route('/login',methods=['POST','GET'])
 def login():
     form = LoginForm()
-    if form.validate_on_submit():
-        return redirect('home')
+    session.pop('user',None )
+    session.pop('usename',None)
+    session.pop('orgname',None)
+    if request.method == 'POST':
+        user_data = mongo.db.user.find_one({"Email": form.email.data},{"_id":0 ,"Email":1, "Password":1,
+                                                                             "FullName":1, "Organization":1})
+        if user_data:
+            if bcrypt.check_password_hash(user_data["Password"], form.password.data):
+                session['user'] = user_data['Email']
+                session['username'] = user_data['FullName']
+                session['orgname'] = user_data['Organization']
+                return redirect(url_for('home'))
+            else:  
+                flash('Incorrect password.')  
+        else:
+            flash('Email does not exist.')
     return render_template('auth-login.html',form=form)
 
-@app.route('/home')
-def home():
-    return render_template('home.html')     
+@app.before_request
+def before_request():
+    g.user = None
+    if 'user' in session:
+        g.user = session['user']
+    if 'username' in session:
+        g.username = session['username']   
+    if 'orgname' in session:
+        g.orgname = session['orgname']    
 
-@app.route('/update')
+@app.route('/logout')
+def logout():
+    session.pop('user',None)
+    session.pop('username', None)
+    session.pop('orgname', None)
+    return redirect('index')
+
+@app.route('/home',methods=['GET','POST'])
+def home():
+    if g.user:
+        return render_template('home.html')
+    return redirect('login')    
+
+@app.route('/update',methods=['GET','POST'])
 def update():
     form = UpdateForm()
-    if form.validate_on_submit():
-        flash('Profile Updated.','success')
-        return redirect('home')
-    return render_template('update-profile.html',form=form)
+    if g.user:
+        if request.method == 'GET':
+            user_data = mongo.db.user.find_one({"Email": g.user},{"_id":0 ,"Email":1,"TwitterLink":1,"FacebookLink":1,
+                                                                        "Keywords":1,"FullName":1, "Organization":1})
+            keywords = ' '.join([str(i) for i in user_data['Keywords']])                                                         
+            form.fullname.data = user_data["FullName"]
+            form.organization.data = user_data["Organization"]
+            form.email.data = user_data["Email"]
+            form.twitter_link.data = user_data["TwitterLink"]
+            form.facebook_link.data = user_data["FacebookLink"]   
+            form.keywords.data = keywords                                                      
+        
+        if request.method == 'POST':
+            keywords_list = form.keywords.data.split() 
+            mongo.db.user.update({"Email":g.user},{ '$set' : {'FullName' :form.fullname.data, 'Organization':form.organization.data, 
+                                        'Email':form.email.data,'TwitterLink':form.twitter_link.data, 
+                                        'FacebookLink':form.facebook_link.data, 'Keywords':keywords_list}})                            
+            flash('Profile Updated.')
+            return redirect('update')
+        return render_template('update-profile.html',form=form)
+    return redirect('login')    
+    
 
 @app.route('/feedback')
 def feedback():
@@ -48,4 +99,6 @@ def feedback():
 
 @app.route('/tweets')
 def tweets():
-    return render_template('tweets.html')
+    if g.user:
+        return render_template('tweets.html')
+    return redirect('login')    

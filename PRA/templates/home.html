@@ -9,8 +9,6 @@
 {% endblock head %}
 </head>
 <body>
-  <!-- <div id="app">
-    <div class="main-wrapper main-wrapper-1"> -->
       {% block navbar %}
         {{super()}}
       {% endblock navbar %}  
@@ -23,9 +21,9 @@
           <div class="section-header">
             <h1>Dashboard</h1>
           </div>
-          <h2 class="section-title">Welcome back,TestUser!</h2>
+          <h2 class="section-title">Welcome back,{{ g.username}}!</h2>
             <p class="section-lead">
-              Take a look at what people are talking about TestOrganization.
+              Take a look at what people are talking about {{g.orgname}}.
             </p>
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
