@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from PRA import mongo
 
@@ -58,3 +58,11 @@ class LoginForm(FlaskForm):
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
+class ContactForm(FlaskForm):
+    name = StringField('Full name',
+                           validators=[DataRequired(), Length(min=2, max=25)])
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    message = TextAreaField('Message', validators=[DataRequired(), Email()])                    
+    submit = SubmitField('Send')

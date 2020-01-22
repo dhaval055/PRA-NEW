@@ -1,5 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, json, session, g
-from PRA.forms import RegistrationForm, UpdateForm, LoginForm
+from PRA.forms import RegistrationForm, UpdateForm, LoginForm, ContactForm
 from PRA import app, mongo, bcrypt
 
 @app.route('/')
@@ -27,8 +27,9 @@ def registration():
 def login():
     form = LoginForm()
     session.pop('user',None )
-    session.pop('usename',None)
-    session.pop('orgname',None)
+    session.pop('username',None )
+    session.pop('orgname',None )
+
     if request.method == 'POST':
         user_data = mongo.db.user.find_one({"Email": form.email.data},{"_id":0 ,"Email":1, "Password":1,
                                                                              "FullName":1, "Organization":1})
@@ -50,10 +51,10 @@ def before_request():
     if 'user' in session:
         g.user = session['user']
     if 'username' in session:
-        g.username = session['username']   
+        g.username = session['username']
     if 'orgname' in session:
-        g.orgname = session['orgname']    
-
+        g.orgname = session['orgname']        
+        
 @app.route('/logout')
 def logout():
     session.pop('user',None)
@@ -93,12 +94,21 @@ def update():
     return redirect('login')    
     
 
-@app.route('/feedback')
-def feedback():
-    return render_template('contact.html')
+@app.route('/contact',methods=['GET','POST'])
+def contact():
+    form = ContactForm()
+    if request.method == 'POST':
+        mongo.db.feedback.insert_one({"Name": form.name.data,"Email": form.email.data, "Message": form.message.data })
+        flash("We've received your message.")
+    return render_template('contact.html', form=form)
 
 @app.route('/tweets')
 def tweets():
     if g.user:
         return render_template('tweets.html')
     return redirect('login')    
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('errors-404.html')
+
