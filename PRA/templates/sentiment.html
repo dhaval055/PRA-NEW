@@ -1,0 +1,77 @@
+{% extends "layout-sidebar.html" %}
+{% block head %}
+  {{super()}}
+ {% block title %}
+  <title>Public Relations Analyzer</title>
+{% endblock title %}
+{% endblock head %}
+
+    {% block navbar %}
+        {{super()}}
+    {% endblock navbar %}  
+    {% block sidebar %}
+        {{super()}}
+    {% endblock sidebar %}  
+    {% block content %}
+    <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Sentiment Analysis Model</h1>
+          </div>
+          <h2 class="section-title">Test model here.</h2>
+            <p class="section-lead">
+                This is a generic sentiment analysis classifier for texts in english.
+            </p>
+        </section> 
+        <div class="row">
+        <div class="col-lg-7 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-header">
+                  <h4>Test with your own text.</h4>
+                  <div class="card-header-action">
+                    <a href="#" class="btn btn-outline-success" disabled>Positive</a>
+                    <a href="#" class="btn btn-outline-danger"disabled>Negative</a>
+                    <a href="#" class="btn btn-outline-primary"disabled>Neutral</a>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <form method="">
+                        <div class="form-group">
+                            {{form.text(class="form-control",placeholder="Enter text here",rows="5")}}
+                        </div>
+                        {{form.submit(class='btn btn-primary btn-large')}}
+                    </form>
+                </div>
+        </div>   
+    </div>
+    <div class="col-lg-5 col-md-10 col-sm-10 col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Results</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Tag</th>
+                        <th scope="col"></th>
+                        <th scope="col">Confidence</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><p>Positive</p></td>
+                        <td></td>
+                        <td><p class="text-success">100%</p></td>
+                      </tr>
+                    </tbody>
+                  </table>         
+            </div>
+        </div>
+     </div> 
+   </div>
+  </div>        
+    {% endblock content %}
+    {% block scripts %}
+        {{super()}}
+    {% endblock scripts %}

@@ -1,5 +1,5 @@
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, json, session, g
-from PRA.forms import RegistrationForm, UpdateForm, LoginForm, ContactForm
+from PRA.forms import RegistrationForm, UpdateForm, LoginForm, ContactForm, ModelForm
 from PRA import app, mongo, bcrypt
 
 @app.route('/')
@@ -16,7 +16,7 @@ def registration():
         user_profile = {
             "FullName": form.fullname.data, "Organization" : form.organization.data,
             "Email": form.email.data,"Password": hashed_password, "OrganizationType": form.organization_type.data,
-            "TwitterLink": form.twitter_link.data, "FacebookLink": form.facebook_link.data, 
+            "TwitterAccount": form.twitter_id.data, "FacebookLink": form.facebook_link.data, 
             "Keywords":keywords }
         mongo.db.user.insert_one(user_profile)   
         flash('Registration Successful, Login to continue.','success')
@@ -73,20 +73,20 @@ def update():
     form = UpdateForm()
     if g.user:
         if request.method == 'GET':
-            user_data = mongo.db.user.find_one({"Email": g.user},{"_id":0 ,"Email":1,"TwitterLink":1,"FacebookLink":1,
+            user_data = mongo.db.user.find_one({"Email": g.user},{"_id":0 ,"Email":1,"TwitterAccount":1,"FacebookLink":1,
                                                                         "Keywords":1,"FullName":1, "Organization":1})
             keywords = ' '.join([str(i) for i in user_data['Keywords']])                                                         
             form.fullname.data = user_data["FullName"]
             form.organization.data = user_data["Organization"]
             form.email.data = user_data["Email"]
-            form.twitter_link.data = user_data["TwitterLink"]
+            form.twitter_id.data = user_data["TwitterAccount"]
             form.facebook_link.data = user_data["FacebookLink"]   
             form.keywords.data = keywords                                                      
         
         if request.method == 'POST':
             keywords_list = form.keywords.data.split() 
             mongo.db.user.update({"Email":g.user},{ '$set' : {'FullName' :form.fullname.data, 'Organization':form.organization.data, 
-                                        'Email':form.email.data,'TwitterLink':form.twitter_link.data, 
+                                        'Email':form.email.data,'TwitterAccount':form.twitter_id.data, 
                                         'FacebookLink':form.facebook_link.data, 'Keywords':keywords_list}})                            
             flash('Profile Updated.')
             return redirect('update')
@@ -106,9 +106,16 @@ def contact():
 def tweets():
     if g.user:
         return render_template('tweets.html')
-    return redirect('login')    
+    return redirect('login')
 
-@app.errorhandler(404)
-def not_found(e):
+@app.route('/sentiment')
+def sentiment():
+    if g.user:
+        form = ModelForm()
+        return render_template('sentiment.html',form=form)
+    return redirect('login')
+
+@app.errorhandler(Exception)
+def handle_error(e):
     return render_template('errors-404.html')
 

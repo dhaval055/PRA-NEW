@@ -73,9 +73,9 @@
                           </div>
                           <div class="row">
                         <div class="form-group col-md-6 col-12">
-                          <label>Twitter account link</label>
-                          {{ form.twitter_link(class="form-control")}}
-                          {% for error in form.twitter_link.errors %}
+                          <label>Twitter account</label>
+                          {{ form.twitter_id(class="form-control")}}
+                          {% for error in form.twitter_id.errors %}
                               <span class="text-danger">{{ error }}</span>
                           {% endfor %} 
                         </div>

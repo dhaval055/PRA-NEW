@@ -15,7 +15,7 @@ class RegistrationForm(FlaskForm):
                                      validators=[DataRequired(), EqualTo('password')])
     organization_type = SelectField('Organization Type',choices=[('Airline', 'Airline'), ('E-commerce', 'E-commerce'), 
                                         ('Education', 'Education'),('Political Party', 'Political Party')])                                 
-    twitter_link = StringField('Twitter Link',
+    twitter_id = StringField('Twitter id',
                            validators=[DataRequired(), Length(min=2, max=50)])
     facebook_link = StringField('facebook_link',
                            validators=[Length(min=2, max=50)])
@@ -38,7 +38,7 @@ class UpdateForm(FlaskForm):
     email = StringField('Email',
                         validators=[Email()])
 
-    twitter_link = StringField('Twitter Link',
+    twitter_id = StringField('Twitter id',
                            validators=[Length(min=2, max=50)])
     facebook_link = StringField('facebook_link',
                            validators=[Length(min=2, max=50)])
@@ -64,5 +64,9 @@ class ContactForm(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=25)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
-    message = TextAreaField('Message', validators=[DataRequired(), Email()])                    
+    message = TextAreaField('Message', validators=[DataRequired()])                    
     submit = SubmitField('Send')
+
+class ModelForm(FlaskForm):
+    text = TextAreaField('', validators=[DataRequired()])                    
+    submit = SubmitField('Classify Text')
