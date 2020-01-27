@@ -2,7 +2,10 @@ from flask import render_template, url_for, flash, redirect, request, abort, jso
 from PRA.forms import RegistrationForm, UpdateForm, LoginForm, ContactForm, ModelForm
 from PRA import app, mongo, bcrypt
 
-@app.route('/')
+# @app.route('/favicon.ico')
+# def favicon():
+#     return send_from_directory('static/landing-assets/img/favicon.ico')
+
 @app.route('/index')
 def index():
     return render_template('index.html')
