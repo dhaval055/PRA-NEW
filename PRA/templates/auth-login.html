@@ -6,7 +6,6 @@
 {% endblock  head %}
 {% block content %}
 <body>
-  {{super()}}
   <div id="app">
     <section class="section">
       <div class="container mt-5">
@@ -18,7 +17,18 @@
 
             <div class="card card-primary">
               <div class="card-header"><h4>Login</h4></div>
-
+              {% with messages = get_flashed_messages(with_categories=false) %}
+              {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">             
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>  
+                  </div>
+                {% endfor %}
+              {% endif %}
+              {% endwith %}
               <div class="card-body">
                 <form method="POST" action="">
                   <div class="form-group">

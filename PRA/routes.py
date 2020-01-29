@@ -2,11 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, abort, jso
 from PRA.forms import RegistrationForm, UpdateForm, LoginForm, ContactForm, ModelForm
 from PRA import app, mongo, bcrypt
 
-# @app.route('/favicon.ico')
-# def favicon():
-#     return send_from_directory('static/landing-assets/img/favicon.ico')
-
-@app.route('/index')
+@app.route('/index',methods=['GET','POST'])
 def index():
     return render_template('index.html')
 
@@ -118,7 +114,4 @@ def sentiment():
         return render_template('sentiment.html',form=form)
     return redirect('login')
 
-@app.errorhandler(Exception)
-def handle_error(e):
-    return render_template('errors-404.html')
 
