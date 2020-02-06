@@ -1,7 +1,10 @@
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, json, session, g
 from PRA.forms import RegistrationForm, UpdateForm, LoginForm, ContactForm, ModelForm
 from PRA import app, mongo, bcrypt
+from PRA.utils import sentiment_score, process_tweet, tweet_wrapper
+from PRA.twitter_fetch import hashtag_tweets
 
+@app.route('/',methods=['GET','POST'])
 @app.route('/index',methods=['GET','POST'])
 def index():
     return render_template('index.html')
@@ -107,11 +110,37 @@ def tweets():
         return render_template('tweets.html')
     return redirect('login')
 
-@app.route('/sentiment')
+@app.route('/sentiment', methods=['GET','POST'])
 def sentiment():
     if g.user:
         form = ModelForm()
-        return render_template('sentiment.html',form=form)
+        score = 0
+        polarity = ''
+        if request.method == 'POST':
+            text = tweet_wrapper(form.text.data)
+            result= sentiment_score(text)
+            score = result[0]
+            polarity = result[1]    
+        return render_template('sentiment.html',form=form,polarity=polarity,score=score)
     return redirect('login')
 
+@app.route('/analysis',methods=['GET','POST'])
+def analysis():
+    if g.user:
+        keywords = mongo.db.user.find_one({"Email":g.user },{"_id":0 ,"Keywords":1})
+        keywords_list = list(keywords.values())
+        tweets = hashtag_tweets(keywords_list[0])
+        processed_tweet =[]
+        analyzed_tweet = []
+        for tweet in tweets:
+            processed_tweet.append(process_tweet(tweet))
+        for i in processed_tweet:
+            analyzed_tweet.append(sentiment_score(i)) 
+        for tweet_data in analyzed_tweet:
+            mongo.db.tweets.insert_one({"User":g.user,"Tweet": {
+                "Text":tweet_data[0],"Polarity":tweet_data[1],"confidence":tweet_data[2]
+            }})    
+        flash("we've collected & analyzed recent 200 tweets. scroll down for more info.")
+        return render_template('home.html')
+    return redirect('login')    
 

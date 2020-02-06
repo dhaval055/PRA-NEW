@@ -21,6 +21,18 @@
           <div class="section-header">
             <h1>Dashboard</h1>
           </div>
+          {% with messages = get_flashed_messages(with_categories=false) %}
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-primary alert-dismissible fade show" role="alert">             
+             {{ message }}
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>  
+            </div>
+          {% endfor %}
+         {% endif %}
+        {% endwith %}
           <h2 class="section-title">Welcome back,{{ g.username}}!</h2>
             <p class="section-lead">
               Take a look at what people are talking about {{g.orgname}}.
@@ -59,14 +71,15 @@
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
               <div class="card card-statistic-1">
                 <div class="card-icon bg-warning">
-                  <i class="far fa-file" style="padding-top:25"></i>
+                  <i class="far fa-user" style="padding-top:25"></i>
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Report</h4>
+                    <h4>Folowers</h4>
                   </div>
                   <div class="card-body">
                     1,201
+                  <a href=" " class='link h6'><i class="fas fa-sync-alt"></i></a>
                   </div>
                 </div>
               </div>
@@ -87,336 +100,60 @@
               </div>
             </div>                  
           </div>
+        </section>
+        <section class="section">
+        <h2 class="section-title">Analytics</h2>
+          <p class="section-lead">
+            Twitter analytics dashboard
+          </p>
           <div class="row">
-            <div class="col-lg-8 col-md-12 col-12 col-sm-12">
-              <div class="card">
-                <div class="card-header">
-                  <h4>Statistics</h4>
-                  <div class="card-header-action">
-                    <div class="btn-group">
-                      <a href="#" class="btn btn-primary">Week</a>
-                      <a href="#" class="btn">Month</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <canvas id="myChart" height="182"></canvas>
-                  <div class="statistic-details mt-sm-4">
-                    <div class="statistic-details-item">
-                      <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 7%</span>
-                      <div class="detail-value">$243</div>
-                      <div class="detail-name">Today's Sales</div>
-                    </div>
-                    <div class="statistic-details-item">
-                      <span class="text-muted"><span class="text-danger"><i class="fas fa-caret-down"></i></span> 23%</span>
-                      <div class="detail-value">$2,902</div>
-                      <div class="detail-name">This Week's Sales</div>
-                    </div>
-                    <div class="statistic-details-item">
-                      <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span>9%</span>
-                      <div class="detail-value">$12,821</div>
-                      <div class="detail-name">This Month's Sales</div>
-                    </div>
-                    <div class="statistic-details-item">
-                      <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 19%</span>
-                      <div class="detail-value">$92,142</div>
-                      <div class="detail-name">This Year's Sales</div>
-                    </div>
+            <div class="col-12 mb-4">
+              <div class="hero bg-primary text-white">
+                <div class="hero-inner">
+                  <h2>Twitter Analysis</h2>
+                  <p class="lead">We're only collecting publicly available tweets, Make sure your twitter account
+                    account is not private.
+                  </p>
+                  <div class="mt-4">
+                    <a href="{{url_for('analysis')}}" class="btn btn-outline-white btn-lg btn-icon icon-left">
+                      <i class="fas fa-chart-bar"></i> Start analyzing</a>&nbsp;
+                      <a href="{{url_for('update')}}" class="btn btn-outline-white btn-lg btn-icon icon-left">
+                      <i class="far fa-user"></i>Update Keywords</a>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-12 col-12 col-sm-12">
-              <div class="card">
-                <div class="card-header">
-                  <h4>Recent Activities</h4>
-                </div>
-                <div class="card-body">             
-                  <ul class="list-unstyled list-unstyled-border">
-                    <li class="media">
-                      <img class="mr-3 rounded-circle" width="50" src="{{url_for('static',filename='assets/img/avatar/avatar-1.png')}}" alt="avatar">
-                      <div class="media-body">
-                        <div class="float-right text-primary">Now</div>
-                        <div class="media-title">Farhan A Mujib</div>
-                        <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</span>
-                      </div>
-                    </li>
-                    <li class="media">
-                      <img class="mr-3 rounded-circle" width="50" src="{{url_for('static',filename='assets/img/avatar/avatar-2.png')}}" alt="avatar">
-                      <div class="media-body">
-                        <div class="float-right">12m</div>
-                        <div class="media-title">Ujang Maman</div>
-                        <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</span>
-                      </div>
-                    </li>
-                    <li class="media">
-                      <img class="mr-3 rounded-circle" width="50" src="{{url_for('static',filename='assets/img/avatar/avatar-3.png')}}" alt="avatar">
-                      <div class="media-body">
-                        <div class="float-right">17m</div>
-                        <div class="media-title">Rizal Fakhri</div>
-                        <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</span>
-                      </div>
-                    </li>
-                    <li class="media">
-                      <img class="mr-3 rounded-circle" width="50" src="{{url_for('static',filename='assets/img/avatar/avatar-4.png')}}" alt="avatar">
-                      <div class="media-body">
-                        <div class="float-right">21m</div>
-                        <div class="media-title">Alfa Zulkarnain</div>
-                        <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</span>
-                      </div>
-                    </li>
-                  </ul>
-                  <div class="text-center pt-1 pb-1">
-                    <a href="#" class="btn btn-primary btn-lg btn-round">
-                      View All
-                    </a>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-12">
+            <div class="row">
+            <div class="col-6 col-sm-12 col-lg-6 mt-lg-0 mt-sm-4">
               <div class="card">
                 <div class="card-header">
-                  <h4>Data amount</h4>
+                  <h4>Tweet sentiment</h4>
                 </div>
                 <div class="card-body">
-                  <div class="mb-4">
-                    <div class="text-small float-right font-weight-bold text-muted">2,100</div>
-                    <div class="font-weight-bold mb-1">Twitter</div>
+                  <div class="mb-4 mt-4">
+                    <div class="text-small float-right font-weight-bold text-muted">558</div>
+                    <div class="font-weight-bold mb-1">Positive</div>
                     <div class="progress" data-height="3">
                       <div class="progress-bar" role="progressbar" data-width="80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>                          
                   </div>
-
                   <div class="mb-4">
-                    <div class="text-small float-right font-weight-bold text-muted">1,880</div>
-                    <div class="font-weight-bold mb-1">Facebook</div>
+                    <div class="text-small float-right font-weight-bold text-muted">338</div>
+                    <div class="font-weight-bold mb-1">Negative</div>
                     <div class="progress" data-height="3">
                       <div class="progress-bar" role="progressbar" data-width="67%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="card">
-                <div class="card-header">
-                  <h4>Popular Browser</h4>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col text-center">
-                      <div class="browser browser-chrome"></div>
-                      <div class="mt-2 font-weight-bold">Chrome</div>
-                      <div class="text-muted text-small"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 48%</div>
-                    </div>
-                    <div class="col text-center">
-                      <div class="browser browser-firefox"></div>
-                      <div class="mt-2 font-weight-bold">Firefox</div>
-                      <div class="text-muted text-small"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 26%</div>
-                    </div>
-                    <div class="col text-center">
-                      <div class="browser browser-safari"></div>
-                      <div class="mt-2 font-weight-bold">Safari</div>
-                      <div class="text-muted text-small"><span class="text-danger"><i class="fas fa-caret-down"></i></span> 14%</div>
-                    </div>
-                    <div class="col text-center">
-                      <div class="browser browser-opera"></div>
-                      <div class="mt-2 font-weight-bold">Opera</div>
-                      <div class="text-muted text-small">7%</div>
-                    </div>
-                    <div class="col text-center">
-                      <div class="browser browser-internet-explorer"></div>
-                      <div class="mt-2 font-weight-bold">IE</div>
-                      <div class="text-muted text-small"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 5%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            </div> 
+            <div class="col-4 col-sm-12 col-lg-4 mt-lg-0 mt-sm-4">
+                <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="500" height="250" 
+                src="https://charts.mongodb.com/charts-pra-wqogx/embed/charts?id=e9476d08-3b91-4ddd-afa0-f99212a19379&autorefresh=1800&theme=light"></iframe>
             </div>
-            <div class="col-lg-6 col-md-6 col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h4>This Week Stats</h4>
-                  <div class="card-header-action">
-                    <div class="dropdown">
-                      <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">Filter</a>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item has-icon"><i class="far fa-circle"></i> Electronic</a>
-                        <a href="#" class="dropdown-item has-icon"><i class="far fa-circle"></i> T-shirt</a>
-                        <a href="#" class="dropdown-item has-icon"><i class="far fa-circle"></i> Hat</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">View All</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="summary">
-                    <div class="summary-info">
-                      <h4>$1,053</h4>
-                      <div class="text-muted">Sold 3 items on 2 customers</div>
-                      <div class="d-block mt-2">                              
-                        <a href="#">View All</a>
-                      </div>
-                    </div>
-                    <div class="summary-item">
-                      <h6>Item List <span class="text-muted">(3 Items)</span></h6>
-                      <ul class="list-unstyled list-unstyled-border">
-                        <li class="media">
-                          <a href="#">
-                            <img class="mr-3 rounded" width="50" src="{{url_for('static',filename='assets/img/products/product-1-50.png')}}" alt="product">
-                          </a>
-                          <div class="media-body">
-                            <div class="media-right">$405</div>
-                            <div class="media-title"><a href="#">PlayStation 9</a></div>
-                            <div class="text-muted text-small">by <a href="#">Hasan Basri</a> <div class="bullet"></div> Sunday</div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-7 col-md-6 col-12 col-sm-6">
-              <div class="card">
-                <div class="card-header">
-                  <h4>Latest Tweets</h4>
-                  <div class="card-header-action">
-                    <a href="{{url_for('tweets')}}" class="btn btn-primary">Detailed view</a>
-                  </div>
-                </div>
-                <div class="card-body p-0">
-                  <div class="table-responsive">
-                    <table class="table table-striped mb-0">
-                      <thead>
-                        <tr>
-                          <th>Tweet</th>
-                          <th>User</th>
-                          <th>Class</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>                         
-                        <tr>
-                          <td>
-                            Introduction Laravel 5
-                            <div class="table-links">
-                              in <a href="#">Web Development</a>
-                              <div class="bullet"></div>
-                              <a href="#">View</a>
-                            </div>
-                          </td>
-                          <td>
-                            <a href="#" class="font-weight-600"><img src="{{url_for('static',filename='assets/img/avatar/avatar-1.png')}}" alt="avatar" width="30" class="rounded-circle mr-1"> Bagus Dwi Cahya</a>
-                          </td>
-                          <td>NA</td>
-                          <td>
-                            
-                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            Laravel 5 Tutorial - Installation
-                            <div class="table-links">
-                              in <a href="#">Web Development</a>
-                              <div class="bullet"></div>
-                              <a href="#">View</a>
-                            </div>
-                          </td>
-                          <td>
-                            <a href="#" class="font-weight-600"><img src="{{url_for('static',filename='assets/img/avatar/avatar-1.png')}}" alt="avatar" width="30" class="rounded-circle mr-1"> Bagus Dwi Cahya</a>
-                          </td>
-                          <td>NA</td>
-                          <td>
-                            
-                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            Laravel 5 Tutorial - MVC
-                            <div class="table-links">
-                              in <a href="#">Web Development</a>
-                              <div class="bullet"></div>
-                              <a href="#">View</a>
-                            </div>
-                          </td>
-                          <td>
-                            <a href="#" class="font-weight-600"><img src="{{url_for('static',filename='assets/img/avatar/avatar-1.png')}}" alt="avatar" width="30" class="rounded-circle mr-1"> Bagus Dwi Cahya</a>
-                          </td>
-                          <td>NA</td>
-                          <td>
-                            
-                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            Laravel 5 Tutorial - Migration
-                            <div class="table-links">
-                              in <a href="#">Web Development</a>
-                              <div class="bullet"></div>
-                              <a href="#">View</a>
-                            </div>
-                          </td>
-                          <td>
-                            <a href="#" class="font-weight-600"><img src="{{url_for('static',filename='assets/img/avatar/avatar-1.png')}}" alt="avatar" width="30" class="rounded-circle mr-1"> Bagus Dwi Cahya</a>
-                          </td>
-                          <td>NA</td>
-                          <td>
-                            
-                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            Laravel 5 Tutorial - Deploy
-                            <div class="table-links">
-                              in <a href="#">Web Development</a>
-                              <div class="bullet"></div>
-                              <a href="#">View</a>
-                            </div>
-                          </td>
-                          <td>
-                            <a href="#" class="font-weight-600"><img src="{{url_for('static',filename='assets/img/avatar/avatar-1.png')}}" alt="avatar" width="30" class="rounded-circle mr-1"> Bagus Dwi Cahya</a>
-                          </td>
-                          <td>NA</td>
-                          <td>
-                            
-                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            Laravel 5 Tutorial - Closing
-                            <div class="table-links">
-                              in <a href="#">Web Development</a>
-                              <div class="bullet"></div>
-                              <a href="#">View</a>
-                            </div>
-                          </td>
-                          <td>
-                            <a href="#" class="font-weight-600"><img src="{{url_for('static',filename='assets/img/avatar/avatar-1.png')}}" alt="avatar" width="30" class="rounded-circle mr-1"> Bagus Dwi Cahya</a>
-                          </td>
-                          <td>NA</td>
-                          <td>
-                            
-                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure you want to delete this?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+          </div> 
+      </section>    
     </div>
     {% endblock content %}
 {% block scripts %}  
@@ -425,3 +162,4 @@
 {% endblock scripts %}  
 </body>
 </html> 
+ 
