@@ -3,6 +3,9 @@
 <head>
 {% block head %}
   {{super()}}
+  <!-- chat.js libs -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
  {% block title %}
   <title>Public Relations Analyzer</title>
 {% endblock title %}
@@ -33,7 +36,7 @@
           {% endfor %}
          {% endif %}
         {% endwith %}
-          <h2 class="section-title">Welcome back,{{ g.username}}!</h2>
+          <h2 class="section-title">Welcome back, {{ g.username}}!</h2>
             <p class="section-lead">
               Take a look at what people are talking about {{g.orgname}}.
             </p>
@@ -75,10 +78,12 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Folowers</h4>
+                    <h4>Followers</h4>
                   </div>
                   <div class="card-body">
-                    1,201
+                    {% if followers%}
+                    {{followers}}
+                    {% endif %}
                   <a href=" " class='link h6'><i class="fas fa-sync-alt"></i></a>
                   </div>
                 </div>
@@ -94,7 +99,7 @@
                     <h4>Total Tweets</h4>
                   </div>
                   <div class="card-body">
-                    47
+                    {{total_tweets}}
                   </div>
                 </div>
               </div>
@@ -111,12 +116,12 @@
               <div class="hero bg-primary text-white">
                 <div class="hero-inner">
                   <h2>Twitter Analysis</h2>
-                  <p class="lead">We're only collecting publicly available tweets, Make sure your twitter account
+                  <p class="lead">We're only collecting publicly available Tweets, Make sure your twitter account
                     account is not private.
                   </p>
                   <div class="mt-4">
                     <a href="{{url_for('analysis')}}" class="btn btn-outline-white btn-lg btn-icon icon-left">
-                      <i class="fas fa-chart-bar"></i> Start analyzing</a>&nbsp;
+                      <i class="fas fa-chart-bar"></i> Start Analyzing</a>&nbsp;
                       <a href="{{url_for('update')}}" class="btn btn-outline-white btn-lg btn-icon icon-left">
                       <i class="far fa-user"></i>Update Keywords</a>
                   </div>
@@ -125,22 +130,22 @@
             </div>
             </div>
             <div class="row">
-            <div class="col-6 col-sm-12 col-lg-6 mt-lg-0 mt-sm-4">
+            <div class="col-12 col-sm-12 col-lg-6 mt-lg-0 mt-sm-4">
               <div class="card">
                 <div class="card-header">
                   <h4>Tweet sentiment</h4>
                 </div>
                 <div class="card-body">
                   <div class="mb-4 mt-4">
-                    <div class="text-small float-right font-weight-bold text-muted">558</div>
-                    <div class="font-weight-bold mb-1">Positive</div>
+                    <div class="text-small float-right font-weight-bold text-muted">{{positive_count}}</div>
+                    <div class="font-weight-bold mb-1">Positive Tweets</div>
                     <div class="progress" data-height="3">
                       <div class="progress-bar" role="progressbar" data-width="80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>                          
                   </div>
                   <div class="mb-4">
-                    <div class="text-small float-right font-weight-bold text-muted">338</div>
-                    <div class="font-weight-bold mb-1">Negative</div>
+                    <div class="text-small float-right font-weight-bold text-muted">{{negative_count}}</div>
+                    <div class="font-weight-bold mb-1">Negative Tweets</div>
                     <div class="progress" data-height="3">
                       <div class="progress-bar" role="progressbar" data-width="67%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
@@ -148,9 +153,14 @@
                 </div>
               </div>
             </div> 
-            <div class="col-4 col-sm-12 col-lg-4 mt-lg-0 mt-sm-4">
-                <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="500" height="250" 
-                src="https://charts.mongodb.com/charts-pra-wqogx/embed/charts?id=e9476d08-3b91-4ddd-afa0-f99212a19379&autorefresh=1800&theme=light"></iframe>
+            <div class="col-12 col-sm-12 col-lg-6 mt-lg-0 mt-sm-4">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Overall Tweet sentiment</h4>
+               </div>
+               <div class="card-body">
+                <canvas id="myPolarityChart" width="150" height="100"></canvas>
+              </div>
             </div>
           </div> 
       </section>    
@@ -159,6 +169,55 @@
 {% block scripts %}  
   <!-- JS Libraies -->
   {{super()}}
+  <script>
+    var ctx = document.getElementById('myPolarityChart').getContext('2d');
+    var myPolairtyChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Positive','Negative'],
+            datasets: [{
+                data: ['{{positive_count}}', '{{negative_count}}'],
+                backgroundColor: [' #66a3ff', ' #6777ef'],
+                borderWidth: 0.5 ,
+                borderColor: '#ddd'
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Tweets Sentiment',
+                position: 'top',
+                fontSize: 16,
+                fontColor: '#111',
+                padding: 20
+            },
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    boxWidth: 20,
+                    fontColor: '#111',
+                    padding: 15
+                }
+            },
+            tooltips: {
+                enabled: true
+            },
+            plugins: {
+                datalabels: {
+                    color: '#111',
+                    textAlign: 'center',
+                    font: {
+                        lineHeight: 1.6
+                    },
+                    formatter: function(value, ctx) {
+                        return ctx.chart.data.labels[ctx.dataIndex] + '\n' + value + '%';
+                    }
+                }
+            }
+        }
+    });
+    </script>
 {% endblock scripts %}  
 </body>
 </html> 

@@ -7,10 +7,14 @@ auth.set_access_token(twitter_creds.ACCESS_TOKEN, twitter_creds.ACCESS_TOKEN_SEC
 api = tw.API(auth, wait_on_rate_limit=True,wait_on_rate_limit_notify=True)
 
 def clean_tweet(tweet):
-    return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
+    """cleaning tweets"""
+    cleaned_tweet= ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
+    cleaned_tweet =cleaned_tweet.lower()
+    return cleaned_tweet
 
 def followers(username):
-    followers = select_user(username).followers_count
+    user = api.get_user(username)
+    followers = user.followers_count
     return followers
 
 def timeline_tweets(username):
@@ -28,4 +32,3 @@ def hashtag_tweets(hashtag_list):
             cleaned_tweets.append(clean_tweet(i.text))
     return cleaned_tweets
 
-    

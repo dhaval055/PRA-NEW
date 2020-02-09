@@ -1,8 +1,7 @@
 from flask import Flask
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
-import PRA.mongocreds
-
+from PRA import mongocreds
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = mongocreds.mongo_uri 

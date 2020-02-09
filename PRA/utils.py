@@ -33,3 +33,4 @@ def sentiment_score(text):
     if score[0][1] >= score[0][0]:
         return [text,'Positive',score[0][1]]
 
+print(tweet_wrapper('i have always loved you'))

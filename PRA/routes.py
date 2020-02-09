@@ -1,8 +1,12 @@
-from flask import render_template, url_for, flash, redirect, request, abort, jsonify, json, session, g
+from flask import render_template, url_for, flash, redirect, request, session, g
 from PRA.forms import RegistrationForm, UpdateForm, LoginForm, ContactForm, ModelForm
 from PRA import app, mongo, bcrypt
 from PRA.utils import sentiment_score, process_tweet, tweet_wrapper
-from PRA.twitter_fetch import hashtag_tweets
+from PRA.twitter_fetch import hashtag_tweets, followers
+from PRA.chart_data import total_tweets, positive_count, negative_count
+
+# followers count commented out purposely to save twitter api calls, enable it while demonstrating project
+# followers=followers(g.twitter) add this on /home and /analysis route
 
 @app.route('/',methods=['GET','POST'])
 @app.route('/index',methods=['GET','POST'])
@@ -31,15 +35,17 @@ def login():
     session.pop('user',None )
     session.pop('username',None )
     session.pop('orgname',None )
+    session.pop('twiiter',None)
 
     if request.method == 'POST':
         user_data = mongo.db.user.find_one({"Email": form.email.data},{"_id":0 ,"Email":1, "Password":1,
-                                                                             "FullName":1, "Organization":1})
+                                                        "TwitterAccount":1,"FullName":1, "Organization":1})
         if user_data:
             if bcrypt.check_password_hash(user_data["Password"], form.password.data):
                 session['user'] = user_data['Email']
                 session['username'] = user_data['FullName']
                 session['orgname'] = user_data['Organization']
+                session['twitter'] = user_data['TwitterAccount']
                 return redirect(url_for('home'))
             else:  
                 flash('Incorrect password.')  
@@ -55,19 +61,23 @@ def before_request():
     if 'username' in session:
         g.username = session['username']
     if 'orgname' in session:
-        g.orgname = session['orgname']        
+        g.orgname = session['orgname']
+    if 'twitter' in session:
+        g.twitter = session['twitter']            
         
 @app.route('/logout')
 def logout():
     session.pop('user',None)
     session.pop('username', None)
     session.pop('orgname', None)
+    session.pop('twitter', None)
     return redirect('index')
 
 @app.route('/home',methods=['GET','POST'])
 def home():
     if g.user:
-        return render_template('home.html')
+        return render_template('home.html',positive_count=positive_count(),negative_count=negative_count(),
+        total_tweets=total_tweets())
     return redirect('login')    
 
 @app.route('/update',methods=['GET','POST'])
@@ -107,7 +117,8 @@ def contact():
 @app.route('/tweets')
 def tweets():
     if g.user:
-        return render_template('tweets.html')
+        tweets = mongo.db.tweets.find({"User": g.user},{"_id":0 ,"Tweet.Text":1,"Tweet.Polarity":1,"Tweet.confidence":1})
+        return render_template('tweets.html',tweets=tweets)
     return redirect('login')
 
 @app.route('/sentiment', methods=['GET','POST'])
@@ -119,7 +130,7 @@ def sentiment():
         if request.method == 'POST':
             text = tweet_wrapper(form.text.data)
             result= sentiment_score(text)
-            score = result[0]
+            score = result[2]
             polarity = result[1]    
         return render_template('sentiment.html',form=form,polarity=polarity,score=score)
     return redirect('login')
@@ -141,6 +152,7 @@ def analysis():
                 "Text":tweet_data[0],"Polarity":tweet_data[1],"confidence":tweet_data[2]
             }})    
         flash("we've collected & analyzed recent 200 tweets. scroll down for more info.")
-        return render_template('home.html')
+        return render_template('home.html',positive_count=positive_count(),negative_count=negative_count(),
+        total_tweets=total_tweets())
     return redirect('login')    
 
