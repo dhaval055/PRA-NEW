@@ -1,0 +1,83 @@
+{% extends "dependancies.html" %}
+<html lang="en">
+{% block head %}
+ {% block title %} <title>Login</title> {% endblock  title %}
+  {{super()}}
+{% endblock  head %}
+{% block content %}
+<body>
+  <div id="app">
+    <section class="section">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <div class="login-brand">
+             <h4>PRA</h4>
+            </div>
+
+            <div class="card card-primary">
+              <div class="card-header"><h4>Login</h4></div>
+              {% with messages = get_flashed_messages(with_categories=false) %}
+              {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">             
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>  
+                  </div>
+                {% endfor %}
+              {% endif %}
+              {% endwith %}
+              <div class="card-body">
+                <form method="POST" action="">
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    {{ form.email(class="form-control")}}     
+                      {% for error in form.email.errors %}
+                          <span class="text-danger">{{ error }}</span>
+                      {% endfor %}
+                  </div>
+
+                  <div class="form-group">
+                    <div class="d-block">
+                    	<label for="password" class="control-label">Password</label>
+                      <div class="float-right">
+                        <a href="" class="text-small">
+                          Forgot Password?
+                        </a>
+                      </div>
+                    </div>
+                      {{ form.password(class="form-control")}}
+                      {% for error in form.password.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                      {% endfor %}
+                  </div>
+
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
+                      <label class="custom-control-label" for="remember-me">Remember Me</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    {{ form.submit(class="btn btn-primary btn-lg btn-block")}}
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="mt-3 text-muted text-center">
+              Don't have an account? <a href="{{url_for('registration')}}">Create One</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+{% block scripts %}
+  {{super()}}
+{% endblock scripts %}
+</body>
+{% endblock content %}
+</html>

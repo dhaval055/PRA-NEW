@@ -1,0 +1,109 @@
+{% extends "layout-sidebar.html" %}
+{% block head %}
+  {{super()}}
+ {% block title %}
+  <title>Public Relations Analyzer</title>
+{% endblock title %}
+{% endblock head %}
+    {% block navbar %}
+        {{super()}}
+    {% endblock navbar %}  
+    {% block sidebar %}
+        {{super()}}
+    {% endblock sidebar %}  
+    {% block content %}
+    <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Name Entity Recognition</h1>
+          </div>
+          <h2 class="section-title">Hello there, {{g.username}}!</h2>
+            <p class="section-lead">
+                Named Entity Recognition AKA NER is a standard NLP problem which involves spotting 
+                named entities from a chunk of text and classifying them into a predefined set of categories.
+            </p>
+            <div class="row">
+              <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                <div class="card  border-primary mb-3">
+                    <div class="card-header">
+                      <h4>Test with your own text.</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            <div class="form-group">
+                                {{form.text(class="form-control",placeholder="Enter text here",rows="5")}}
+                            </div>
+                            {{form.submit(class='btn btn-primary btn-large')}}
+                        </form>
+                    </div>
+                </div>
+              </div> 
+              <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                <div class="card border-primary mb-3">
+                  <div class="card-header">
+                      <h5>Result</h5>
+                  </div>
+                  <div class="card-body">
+                    {{result|markdown}}               
+                  </div>
+                </div>    
+              </div>
+                <div class="col-lg-6 col-md-10 col-sm-10 col-12">
+                    <div class="card border-primary mb-3">
+                        <div class="card-header">
+                            <h5>Name-Entity Categories</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Description</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td><p><mark>PERSON</mark></p></td>
+                                    <td><p class="text-info">People, including fictional</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td><p><mark>NORP</mark></p></td>
+                                    <td><p class="text-info">Nationalities or religious or political group</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td><p><mark>FAC</mark></p></td>
+                                    <td><p class="text-info">Buildings, airports, highway etc.</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td><p><mark>GPE</mark></p></td>
+                                    <td><p class="text-info">Countries, states, cities</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td><p><mark>PRODUCT</mark></p></td>
+                                    <td><p class="text-info">Objects, vehicle, food etc.</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td><p><mark>LANGUAGE</mark></p></td>
+                                    <td><p class="text-info">Any named language</p></td>
+                                  </tr><tr>
+                                    <td><p><mark>DATE</mark></p></td>
+                                    <td><p class="text-info">Date, time</p></td>
+                                  </tr><tr>
+                                    <td><p><mark>QUANTITY</mark></p></td>
+                                    <td><p class="text-info">Measurements such as weight , distance etc.</p></td>
+                                  </tr>
+                                </tbody>
+                              </table>         
+                        </div>
+                    </div>
+            </div>
+            <div class="row">
+                   
+            </div>
+        </div>         
+        </section> 
+    </div>      
+    {% endblock content %}
+    {% block scripts %}
+        {{super()}}
+    {% endblock scripts %} 

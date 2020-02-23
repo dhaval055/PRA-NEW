@@ -1,0 +1,66 @@
+{% extends "layout-sidebar.html" %}
+{% block head %}
+  {{super()}}
+ {% block title %}
+  <title>Public Relations Analyzer</title>
+{% endblock title %}
+<link rel="stylesheet" href="{{url_for('static',filename='assets/paginate.css')}}">
+{% endblock head %}
+
+    {% block navbar %}
+        {{super()}}
+    {% endblock navbar %}  
+    {% block sidebar %}
+        {{super()}}
+    {% endblock sidebar %}  
+    {% block content %}
+    <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Twitter Data</h1>
+          </div>
+          <h2 class="section-title">What's up ,{{g.username}}!</h2>
+            <p class="section-lead">
+              List of tweets we've collected so far, In case you want to take a look at all of them.
+            </p>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="row flex-row flex-nowrap">
+              <div class="card border-primary mb-3">
+                  <div class="card-header">
+                      <h5>Tweets</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      {{ pagination.info }}
+                      <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col"></th>
+                              <th scope="col">Tweet</th>
+                              <th scope="col">Sentiment</th>
+                              <th scope="col">Confidence</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for tweet in tweets %}
+                            <tr>
+                              <td>{{ loop.index + pagination.skip }}</td>
+                              <td><p>{{tweet['Tweet']['Text']}}</p></td>
+                              <td><p class="text-primary">{{tweet['Tweet']['Polarity']}}</p></td>
+                              <td><p class="text-info">{{tweet['Tweet']['confidence']}}</p></td>
+                            </tr>
+                            {% endfor%}
+                          </tbody>
+                        </table>
+                        {{ pagination.links }}
+                      </div>         
+                  </div>
+              </div>
+            </div>
+           </div>      
+        </section> 
+    </div>      
+    {% endblock content %}
+    {% block scripts %}
+        {{super()}}
+    {% endblock scripts %} 

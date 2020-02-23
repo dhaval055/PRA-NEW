@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Public Relations Analyzer</title>
+  <link rel="icon" href="data:,">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <link href="{{url_for('static',filename='landing-assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="{{url_for('static',filename='landing-assets/lib/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="{{url_for('static',filename='landing-assets/lib/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='landing-assets/lib/animate/animate.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='landing-assets/lib/ionicons/css/ionicons.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='landing-assets/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='landing-assets/lib/lightbox/css/lightbox.min.css')}}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Main Stylesheet File -->
+  <link href="{{url_for('static',filename='landing-assets/css/style.css')}}" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+  <!--==========================
+  Header
+  ============================-->
+  <header id="header" class="fixed-top">
+    <div class="container">
+
+      <div class="logo float-left">
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <h1 class="text-light"><a href="#header"><span>PRA</span></a></h1> 
+        <!-- <a href="#intro" class="scrollto"><img src="img/logo.png" alt="" class="img-fluid"></a> -->
+      </div>
+
+      <nav class="main-nav float-right d-none d-lg-block">
+        <ul>
+          <li class=""><a href="{{url_for('home')}}">Dashboard</a></li>
+          <li><a href="#about">About Project</a></li>
+          <li><a href="#services">Features</a></li>
+          <li><a href="{{url_for('registration')}}">Register</a></li>
+          <li><a href="{{url_for('login')}}">Login</a></li>
+          <li><a href="{{url_for('contact')}}">Contact Us</a></li>
+        </ul>
+      </nav><!-- .main-nav -->
+      
+    </div>
+  </header><!-- #header -->
+
+  <!--==========================
+    Intro Section
+  ============================-->
+  <section id="intro" class="clearfix">
+    <div class="container">
+
+      <div class="intro-img">
+        <img src="{{url_for('static',filename='landing-assets/img/intro-img.svg')}}" alt="" class="img-fluid">
+      </div>
+
+      <div class="intro-info">
+        <h2>Analytical<br><span>solutions</span><br>for your business!</h2>
+        <div>
+          <a href="{{url_for('registration')}} " class="btn-get-started scrollto">Get Started</a>
+          <a href="#services" class="btn-services scrollto">Our Services</a>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- #intro -->
+
+  <main id="main">
+
+    <!--==========================
+      About Us Section
+    ============================-->
+    <section id="about">
+      <div class="container">
+
+        <header class="section-header">
+          <h3>About Project</h3>
+          <p>PRA is an autonomous survey analysis tool that will help your organization connect
+            quickly to cover every source of feedback and analyze what is driving
+            feedback volume, sentiment, effort or satisfaction of customers.</p>
+        </header>
+
+        <div class="row about-container">
+
+          <div class="col-lg-6 content order-lg-1 order-2">
+            <p>
+              PRA will help businesses to detect sentiments in online conversations,
+              helping them to understand how customers feel about their brand, product or service.
+            </p>
+
+            <div class="icon-box wow fadeInUp">
+              <div class="icon"><i class="ion-happy"></i></div>
+              <h4 class="title">Sentiment Analysis</h4>
+              <p class="description">Sentiment Analysis is text classification tool that analyses a message and tells whether 
+                the underlying sentiment is positive, negative our neutral</p>
+            </div>
+
+            <div class="icon-box wow fadeInUp" data-wow-delay="0.2s">
+              <div class="icon"><i class="ion-arrow-graph-down-left"></i></div>
+              <h4 class="title">Intent Mining</h4>
+              <p class="description">Intent analysis steps up the game by analyzing the user’s intention behind a message and identifying
+                 whether it relates an opinion, news, marketing, complaint, suggestion, appreciation or query.</p>
+            </div>
+
+            <div class="icon-box wow fadeInUp" data-wow-delay="0.4s">
+              <div class="icon"><i class="fa fa-bar-chart"></i></div>
+              <h4 class="title">Text Analytics</h4>
+              <p class="description">PRA provides sentiment analysis, topic detection and keyword extraction
+                to faciliate the process of text analysis.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="col-lg-6 background order-lg-2 order-1 wow fadeInUp">
+            <img src="{{url_for('static',filename='landing-assets/img/about-img.svg')}}" class="img-fluid" alt="">
+          </div>
+        </div>
+
+        <div class="row about-extra">
+          <div class="col-lg-6 wow fadeInUp">
+            <img src="{{url_for('static',filename='landing-assets/img/about-extra-1.svg')}}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 wow fadeInUp pt-5 pt-lg-0">
+            <h4>So how does the Public Relations Analyzer works?</h4>
+            <p>
+              PR Analyzer will help saving time as
+              well as resources by automating current tedious feedback managing process using various
+              machine learning algorithms and Natural Language processing.
+            </p>
+            <p>
+              We are using different machine learning algorithms to achieve higher accuracy for text analysis processes
+              such as sentiment analysis, topic modeling, keyword extraction, entity recognition etc. to draw a conclusion
+              from large chunk of textual data.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section><!-- #about -->
+  
+    <!--==========================
+      Services Section
+    ============================-->
+    <section id="services" class="section-bg">
+      <div class="container">
+
+        <header class="section-header">
+          <h3>Features</h3>
+          <p>PRA is designed to simplify the process of feedback management by using Natural Language Processing and Deep Learning algorithms.</p>
+        </header>
+
+        <div class="row">
+
+          <div class="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp" data-wow-duration="1.4s">
+            <div class="box">
+               <div class="icon"><i class="ion-ios-analytics-outline" style="color: #ff689b;padding-left: 15px;"></i></div> 
+              <h4 class="title">Data Collection</h4>
+              <p class="description">We are using Twitter/ Facebook APIs for collecting data to perform text analysis and store 
+                into high performing database.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-5 wow bounceInUp" data-wow-duration="1.4s">
+            <div class="box">
+              <div class="icon"><i class="ion-arrow-graph-up-left" style="color: #e9bf06;padding-left:20px;"></i></div>
+              <h4 class="title">Real Time Analytics</h4>
+              <p class="description">PRA collects data in real time as soon as it becomes available to get insights and draw conclusion immediately.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
+            <div class="box">
+              <div class="icon"><i class="ion-ios-paper-outline" style="color: #3fcdc7;padding-left:20px"></i></div>
+              <h4 class="title">Topic modeling</h4>
+              <p class="description">It is a process to automatically identify topics present in 
+                a text object and to derive hidden patterns from a text corpus.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-5 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
+            <div class="box">
+              <div class="icon"><i class="ion-ios-speedometer-outline" style="color:#41cf2e;padding-left:20px;"></i></div>
+              <h4 class="title">Data visualization</h4>
+              <p class="description">By using visual elements like charts, graphs PRA provides accesible way to see trends, patterns in data.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-5 offset-lg-1 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
+            <div class="box">
+              <div class="icon"><i class="ion-ios-book" style="color: #d6ff22;padding-left:20px;"></i></div>
+              <h4 class="title">Intent Analysis</h4>
+              <p class="description">Intent classifier tells whether the underlying intention behind a sentence is opinion, 
+                news, marketing, complaint, suggestion and query.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-5 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
+            <div class="box">
+              <div class="icon"><i class="ion-sad-outline" style="color: #4680ff;padding-left:20px"></i></div>
+              <h4 class="title">Automatic Ticket Generation</h4>
+              <p class="description">This module is designed to generate tickets from a set of negative feedbacks using topic modeling methods.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- #services -->
+  </main>
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6 footer-info">
+            <h3>PRA</h3>
+            <p>It is a tool that uses data to drive operations improvements, solves point of friction and service or product enhancement. </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Features</a></li>
+              <li><a href="#">Terms of service</a></li>
+              <li><a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+              A108 XYZ Street <br>
+              NA<br>
+              ABC <br>
+              <strong>Phone:</strong> 1 234 234 234<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>NewBiz</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div> -->
+  
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+  
+
+  <!-- JavaScript Libraries -->
+  <script src="{{url_for('static',filename='landing-assets/lib/jquery/jquery.min.js')}}"></script>
+  <script src="{{url_for('static',filename='landing-assets/lib/jquery/jquery-migrate.min.js')}}"></script>
+  <script src="{{url_for('static',filename='landing-assets/lib/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{url_for('static',filename='landing-assets/lib/easing/easing.min.js')}}"></script>
+  <script src="{{url_for('static',filename='landing-assets/lib/mobile-nav/mobile-nav.js')}}"></script>
+  <script src="{{url_for('static',filename='landing-assets/lib/wow/wow.min.js')}}"></script>
+  <script src="{{url_for('static',filename='landing-assets/lib/waypoints/waypoints.min.js')}}"></script>
+  <script src="{{url_for('static',filename='landing-assets/lib/counterup/counterup.min.js')}}"></script>
+  <script src="{{url_for('static',filename='landing-assets/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+  <script src="{{url_for('static',filename='landing-assets/lib/isotope/isotope.pkgd.min.js')}}"></script>
+  <script src="{{url_for('static',filename='landing-assets/lib/lightbox/js/lightbox.min.js')}}"></script>
+  <!-- Contact Form JavaScript File -->
+  
+
+  <!-- Template Main Javascript File -->
+  <script src="{{url_for('static',filename='landing-assets/js/main.js')}}"></script>
+
+</body>
+</html>

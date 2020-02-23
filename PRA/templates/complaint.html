@@ -1,0 +1,56 @@
+{% extends "layout-sidebar.html" %}
+{% block head %}
+  {{super()}}
+ {% block title %}
+  <title>Public Relations Analyzer</title>
+{% endblock title %}
+{% endblock head %}
+    {% block navbar %}
+        {{super()}}
+    {% endblock navbar %}  
+    {% block sidebar %}
+        {{super()}}
+    {% endblock sidebar %}  
+    {% block content %}
+    <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Airline Complaint Classifier</h1>
+          </div>
+          <h2 class="section-title">Hello there, {{g.username}}!</h2>
+            <p class="section-lead">
+                
+            </p>
+            <div class="row">
+              <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                <div class="card  border-primary mb-3">
+                    <div class="card-header">
+                      <h4>Test with your own text.</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            <div class="form-group">
+                                {{form.text(class="form-control",placeholder="Enter text here",rows="5")}}
+                            </div>
+                            {{form.submit(class='btn btn-primary btn-large')}}
+                        </form>
+                    </div>
+                </div>
+              </div> 
+              <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                <div class="card border-primary mb-3">
+                  <div class="card-header">
+                      <h5>Complaint Class</h5>
+                  </div>
+                  <div class="card-body">
+
+                </div>
+                </div>    
+              </div>
+        </div>         
+        </section> 
+    </div>      
+    {% endblock content %}
+    {% block scripts %}
+        {{super()}}
+    {% endblock scripts %} 

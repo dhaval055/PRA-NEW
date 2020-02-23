@@ -1,0 +1,349 @@
+
+{% extends "layout-sidebar.html" %}
+<head>
+{% block head %}
+  {{super()}}
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://d3js.org/d3.v4.js"></script>
+<!-- Load d3-cloud -->
+<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+ {% block title %}
+  <title>Public Relations Analyzer</title>
+{% endblock title %}
+{% endblock head %}
+</head>
+<body>
+      {% block navbar %}
+        {{super()}}
+      {% endblock navbar %}  
+      {% block sidebar %}
+        {{super()}}
+      {% endblock sidebar %}  
+      {% block content %}
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Dashboard</h1>
+          </div>
+          {% with messages = get_flashed_messages(with_categories=false) %}
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-primary alert-dismissible fade show" role="alert">             
+             {{ message }}
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>  
+            </div>
+          {% endfor %}
+         {% endif %}
+        {% endwith %}
+          <h2 class="section-title">Welcome back, {{ g.username}}!</h2>
+            <p class="section-lead">
+              Take a look at what people are talking about {{g.orgname}}.
+            </p>
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1 card-primary">
+                <div class="card-icon bg-primary">
+                  <i class="fas fa-ticket-alt"style="padding-top:25"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Total Tickets</h4>
+                  </div>
+                  <div class="card-body">
+                    10
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1 card-danger">
+                <div class="card-icon bg-danger">
+                  <i class="fas fa-ticket-alt" style="padding-top:25"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Open Tickets</h4>
+                  </div>
+                  <div class="card-body">
+                    42
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1 card-warning">
+                <div class="card-icon bg-warning">
+                  <i class="far fa-user" style="padding-top:25"></i>
+                </div>
+                <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Followers</h4>
+                  </div>
+                  <div class="card-body">
+                    {% if followers%}
+                    {{followers}}
+                    {% endif %}
+                  <a href=" " class='link h6'><i class="fas fa-sync-alt"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <div class="card card-statistic-1 card-primary">
+                <div class="card-icon bg-primary">
+                  <i class="fab fa-twitter" style="padding-top: 25"></i>
+                </div>
+              <a href="{{url_for('tweets')}}">
+                 <div class="card-wrap">
+                  <div class="card-header">
+                    <h4>Total Tweets</h4>
+                  </div>
+                  <div class="card-body">
+                    {{total_tweets}}
+                  </div>
+                </div>
+              </a> 
+              </div>
+            </div>                  
+          </div>
+        </section>
+        <section class="section">
+        <h2 class="section-title">Analytics</h2>
+          <p class="section-lead">
+            Twitter analytics dashboard
+          </p>
+          <div class="row">
+            <div class="col-12 mb-4">
+              <div class="hero bg-primary text-white">
+                <div class="hero-inner">
+                  <h2>Twitter Analysis</h2>
+                  <p class="lead">We're only collecting publicly available Tweets, Make sure your twitter account
+                    account is not private.
+                  </p>
+                  <div class="mt-4">
+                    <a href="{{url_for('analysis')}}" class="btn btn-outline-white btn-lg btn-icon icon-left">
+                      <i class="fas fa-chart-bar"></i> Start Analyzing</a>&nbsp;
+                      <a href="{{url_for('update')}}" class="btn btn-outline-white btn-lg btn-icon icon-left">
+                      <i class="far fa-user"></i>Update Keywords</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-12 col-sm-12 col-lg-6 mt-lg-0 mt-sm-4">
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h4>Tweets sentiment</h4>
+                </div>
+                <div class="card-body">
+                  <div class="mb-4">
+                    <div class="text-small float-right font-weight-bold text-muted">{{negative_count+positive_count}}</div>
+                    <div class="font-weight-bold mb-1">Total Tweets</div>
+                    <div class="progress" data-height="3">
+                      <div class="progress-bar" role="progressbar" data-width="67%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                  <div class="mb-4 mt-4">
+                    <div class="text-small float-right font-weight-bold text-muted">{{positive_count}}</div>
+                    <div class="font-weight-bold mb-1">Positive Tweets</div>
+                    <div class="progress" data-height="3">
+                      <div class="progress-bar" role="progressbar" data-width="80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>                          
+                  </div>
+                  <div class="mb-4">
+                    <div class="text-small float-right font-weight-bold text-muted">{{negative_count}}</div>
+                    <div class="font-weight-bold mb-1">Negative Tweets</div>
+                    <div class="progress" data-height="3">
+                      <div class="progress-bar" role="progressbar" data-width="67%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+            <div class="col-12 col-sm-12 col-lg-6 mt-lg-0 mt-sm-4">
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h4>Overall Tweets sentiment</h4>
+               </div>
+               <div class="card-body">
+                <div id="chart_div"></div>              
+              </div>
+            </div>
+          </div> 
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-12 col-lg-6 mt-lg-0 mt-sm-4">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h4>Wordcloud</h4>
+             </div>
+             <div class="card-body">
+              <div id="my_dataviz"></div>
+            </div>
+          </div>
+        </div> 
+        <div class="col-12 col-sm-12 col-lg-6 mt-lg-0 mt-sm-4">
+          <div class="card card-danger">
+            <div class="card-header">
+              <h4>Wordcloud for Negative Tweets</h4>
+           </div>    
+           <div class="card-body">
+            <div id="my_dataviz_neg"></div>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-12 col-lg-6 mt-lg-0 mt-sm-4">
+        <div class="card ">
+          <div class="card-header">
+            <h4>Tweets Location</h4>
+            <div class="card-header-action">
+              <a data-collapse="#mycard-collapse-loc" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
+            </div>
+         </div>
+         <div class="collapse show" id="mycard-collapse-loc">
+         <div class="card-body">
+          <div class="section-title mt-0">User's Location</div>
+          {% for i in locations %}
+          <ul class="list-group">
+            <li class="list-group-item">{{i}}</li> 
+          </ul>  
+          {% endfor %}  
+        </div>
+        </div>
+        </div>
+      </div>
+    </div> 
+    </div>
+</section>    
+</div>
+{% endblock content %}
+{% block scripts %}  
+  <!-- JS Libraies -->
+  {{super()}}
+  <script type="text/javascript">
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+
+      // Create the data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Sentiment');
+      data.addColumn('number', 'Count');
+      data.addRows([
+        ['Positive', {{positive_count}}],
+        ['Negative', {{negative_count}}],
+      ]);
+
+      // Set chart options
+      var options = {'title':'Overall Tweets Sentiment',
+                     'width':400,
+                     'height':200,
+                     colors: ['#6777ef', '#30376b']};
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }    
+  </script>
+    <script>
+      // List of words
+      var myWords = [];
+      {% for i in words%}
+        myWords.push('{{i}}'); 
+      {%endfor%}
+      // set the dimensions and margins of the graph
+      var margin = {top: 10, right: 10, bottom: 10, left: 10},
+          width = 450 - margin.left - margin.right,
+          height = 350 - margin.top - margin.bottom;   
+      // append the svg object to the body of the page
+      var svg = d3.select("#my_dataviz").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");  
+      // Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
+      var layout = d3.layout.cloud()
+        .size([width, height])
+        .words(myWords.map(function(d) { return {text: d}; }))
+        .padding(10)
+        .fontSize(30)
+        .on("end", draw);
+      layout.start();  
+      // This function takes the output of 'layout' above and draw the words
+      // Better not to touch it. To change parameters, play with the 'layout' variable above
+      function draw(words) {
+        svg
+          .append("g")
+            .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+            .selectAll("text")
+              .data(words)
+            .enter().append("text")
+              .style("font-size", function(d) { return d.size + "px"; })
+              .attr("text-anchor", "middle")
+              .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+              })
+              .text(function(d) { return d.text; });
+      }
+      </script>
+<script>
+  // Wordcloud for negative tweets
+  // List of words
+  var myWords = [];
+      {% for i in neg_words%}
+        myWords.push('{{i}}'); 
+      {%endfor%}
+  // set the dimensions and margins of the graph
+  var margin = {top: 10, right: 10, bottom: 10, left: 10},
+      width = 450 - margin.left - margin.right,
+      height = 350 - margin.top - margin.bottom;   
+  // append the svg object to the body of the page
+  var svg = d3.select("#my_dataviz_neg").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");  
+  // Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
+  var layout = d3.layout.cloud()
+    .size([width, height])
+    .words(myWords.map(function(d) { return {text: d}; }))
+    .padding(10)
+    .fontSize(30)
+    .on("end", draw);
+  layout.start();  
+  // This function takes the output of 'layout' above and draw the words
+  // Better not to touch it. To change parameters, play with the 'layout' variable above
+  function draw(words) {
+    svg
+      .append("g")
+        .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+        .selectAll("text")
+          .data(words)
+        .enter().append("text")
+          .style("font-size", function(d) { return d.size + "px"; })
+          .attr("text-anchor", "middle")
+          .attr("transform", function(d) {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+          })
+          .text(function(d) { return d.text; });
+  }
+  </script>      
+{% endblock scripts %}  
+</body>
+</html> 
+ 

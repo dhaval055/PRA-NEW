@@ -1,0 +1,107 @@
+{% extends "layout-sidebar.html" %}
+{% block head %}
+  {{super()}}
+ {% block title %}
+  <title>Public Relations Analyzer</title>
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    $(function() {
+      $("#refresh").click(function(evt) {
+         $("#result").load("{{url_for('sentiment')}}")
+         evt.preventDefault();
+      })
+    })
+</script> -->
+{% endblock title %}
+{% endblock head %}
+
+    {% block navbar %}
+        {{super()}}
+    {% endblock navbar %}  
+    {% block sidebar %}
+        {{super()}}
+    {% endblock sidebar %}  
+    {% block content %}
+    <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Sentiment Analysis Model &nbsp;&nbsp;</h1>
+            <button class="btn btn-outline-info" id="" data-toggle="modal" data-target="#Modal">Model details</button>
+          </div>
+          <h2 class="section-title">Test model here.</h2>
+            <p class="section-lead">
+                This is a generic sentiment analysis classifier for texts in English.
+            </p>
+        </section> 
+        <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Model Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Model : LogisticRegression</p>
+                <p>Accuracy : 74.20</p>
+                <p>Recall : 82.58</p>
+                <p>Precision : 74.51 </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-7 col-md-12 col-sm-12 col-12">
+            <div class="card  border-primary mb-3">
+                <div class="card-header">
+                  <h4>Test with your own text.</h4>
+                  <div class="card-header-action">
+                    <a href="#" class="btn btn-outline-success" disabled>Positive</a>
+                    <a href="#" class="btn btn-outline-danger"disabled>Negative</a>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-group">
+                            {{form.text(class="form-control",placeholder="Enter text here",rows="5")}}
+                        </div>
+                        {{form.submit(class='btn btn-primary btn-large',id='refresh')}}
+                    </form>
+                </div>
+        </div>   
+    </div>
+    <div class="col-lg-5 col-md-10 col-sm-10 col-12">
+        <div class="card border-primary mb-3">
+            <div class="card-header">
+                <h5>Results</h5>
+            </div>
+            <div class="card-body" id='result'>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Tag</th>
+                        <th scope="col"></th>
+                        <th scope="col">Confidence</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><p>{{polarity}}</p></td>
+                        <td></td>
+                        <td><p class="text-primary">{{score}}</p></td>
+                      </tr>
+                    </tbody>
+                  </table>         
+            </div>
+        </div>
+     </div> 
+   </div>
+  </div>        
+    {% endblock content %}
+    {% block scripts %}
+        {{super()}}
+    {% endblock scripts %}

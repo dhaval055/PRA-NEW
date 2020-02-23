@@ -1,0 +1,113 @@
+{% extends "layout-sidebar.html" %}
+{% block head %}
+  {{super()}}
+ {% block title %}
+  <title>Public Relations Analyzer</title>
+{% endblock title %}
+{% endblock head %}
+
+        {% block navbar %}
+        {{super()}}
+      {% endblock navbar %}  
+      {% block sidebar %}
+        {{super()}}
+      {% endblock sidebar %}  
+      {% block content %}
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>Update Profile</h1>
+          </div>
+        {% with messages = get_flashed_messages(with_categories=false) %}
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-primary alert-dismissible fade show" role="alert">             
+             {{ message }}
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>  
+            </div>
+          {% endfor %}
+         {% endif %}
+        {% endwith %}
+          <h2 class="section-title">Hello there,{{g.username}}!</h2>
+            <p class="section-lead">
+              Change information about yourself on this page.
+            </p>
+            <div class="col-12 col-md-12 col-lg-7">
+                <div class="card">
+                  <div method="post" class="needs-validation" novalidate="">
+                    <div class="card-header">
+                      <h4>Edit Profile</h4>
+                    </div>
+                    <form method="POST">
+                    <div class="card-body">
+                        <div class="row">                               
+                          <div class="form-group col-md-6 col-12">
+                            <label for="fullname">Full Name</label>
+                            {{ form.fullname(class="form-control")}}
+                            <div class="invalid-feedback">
+                              {% for error in form.fullname.errors %}
+                                  <span class="text-danger">{{ error }}</span>
+                              {% endfor %}
+                          </div>
+                          </div>
+                          <div class="form-group col-md-6 col-12">
+                            <label for="last_name">Organization Name</label>
+                            {{ form.organization(class="form-control")}}
+                            <div class="invalid-feedback">
+                              {% for error in form.organization.errors %}
+                                  <span class="text-danger">{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="form-group col-md-12 col-12">
+                            <label for="email">Email</label>
+                             {{ form.email(class="form-control")}}
+                            {% for error in form.email.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                          </div>
+                          </div>
+                          <div class="row">
+                        <div class="form-group col-md-6 col-12">
+                          <label>Twitter account</label>
+                          {{ form.twitter_id(class="form-control")}}
+                          {% for error in form.twitter_id.errors %}
+                              <span class="text-danger">{{ error }}</span>
+                          {% endfor %} 
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6 col-12">
+                              <label>Facebook account link</label>
+                              {{ form.facebook_link(class="form-control")}}
+                              {% for error in form.facebook_link.errors %}
+                                    <span class="text-danger">{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            <div class="form-group col-md-6 col-12">
+                              <label>Keywords <span>(Seperated by space)</span></label>
+                              {{ form.keywords(class="form-control")}}
+                              {% for error in form.keywords.errors %}
+                                   <span class="text-danger">{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                      {{ form.submit(class=" btn btn-primary btn-block btn-block")}}
+                    </div>
+                  </form>
+                </div>
+              </div>
+         </section>
+       </div>     
+      {% endblock content%}
+      {% block scripts %}  
+        <!-- JS Libraies -->
+        {{super()}}
+      {% endblock scripts %}  
+     

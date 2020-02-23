@@ -1,0 +1,1 @@
+mongo_uri ='mongodb+srv://dhaval055:StrongPassword@cluster0-26x4v.mongodb.net/test?retryWrites=true&w=majority'

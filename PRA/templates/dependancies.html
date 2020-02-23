@@ -1,0 +1,53 @@
+<!-- Used for login,reg,forgot pass -->
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+<head>
+ <link rel="icon" href="data:,">
+ <meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+{% block title %}
+
+{% endblock title %}
+
+<!-- General CSS Files -->
+<link rel="stylesheet" href="{{url_for('static',filename='assets/modules/bootstrap/css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/modules/fontawesome/css/all.min.css')}}">
+
+<!-- Plugins -->
+<link rel="stylesheet" href="{{url_for('static',filename='assets/modules/bootstrap-social/bootstrap-social.css')}}">
+
+<!-- Template CSS -->
+<link rel="stylesheet" href="{{url_for('static',filename='assets/css/style.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/css/components.css')}}">
+</head>
+{% endblock head %}
+{% block content %}
+}
+{% block scripts %}
+
+<!-- General JS Scripts -->
+<script src="{{url_for('static',filename='assets/modules/jquery.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/modules/popper.js')}}"></script>
+<script src="{{url_for('static',filename='assets/modules/tooltip.js')}}"></script>
+<script src="{{url_for('static',filename='assets/modules/bootstrap/js/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/modules/nicescroll/jquery.nicescroll.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/modules/moment.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/js/stisla.js')}}"></script>
+
+<!-- JS Libraies -->
+<script src="{{url_for('static',filename='assets/modules/simple-weather/jquery.simpleWeather.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/modules/chart.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/modules/jqvmap/dist/jquery.vmap.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/modules/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
+<script src="{{url_for('static',filename='assets/modules/summernote/summernote-bs4.js')}}"></script>
+<script src="{{url_for('static',filename='assets/modules/chocolat/dist/js/jquery.chocolat.min.js')}}"></script>
+
+<!-- Page Specific JS File -->
+
+<!-- Template JS File -->
+<script src="{{url_for('static',filename='assets/js/scripts.js')}}"></script>
+<script src="{{url_for('static',filename='assets/js/custom.js')}}"></script>
+{% endblock scripts %}
+{% endblock content %}
+</html>
